@@ -20,7 +20,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
   <Header />
   <main id="main-content">
     <section id="hero">
-      <h1>Hey, I'm Oz</h1>
+      <h1>Wx</h1>
       <a target="_blank" href="/rss.xml" class="rss-link" aria-label="rss feed" title="RSS Feed">
         <svg xmlns="http://www.w3.org/2000/svg" class="rss-icon"
           ><path d="M19 20.001C19 11.729 12.271 5 4 5v2c7.168 0 13 5.832 13 13.001h2z"></path><path
@@ -31,18 +31,14 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         </svg>
         <span class="sr-only">RSS Feed</span>
       </a>
-
-      <p>I am a software engineer based in Istanbul. I am currently working at Unkey.</p>
-
-      <p>
-        This website is my brain dump, where I stuff everything I can think of, mostly about
-        JavaScript, TypeScript, and web technologies. Recently, a bit of Rust.
-      </p>
+      <p>在某个蒙尘的角落里记录一些容易忘记的人和事。</p>
+      <p>此为心中的埃斯·洛耶斯</p>
+      <p class="font-wenkai text-sm opacity-75">直到遥远的那个什么...</p>
       {
         // only display if at least one social link is enabled
         socialCount > 0 && (
           <div class="social-wrapper">
-            <div class="social-links">Social Links:</div>
+            <div class="social-links">神秘链接:</div>
             <Socials />
           </div>
         )
@@ -54,7 +50,7 @@ const socialCount = SOCIALS.filter(social => social.active).length;
     {
       recentPosts.length > 0 && (
         <section id="recent-posts">
-          <h2>Recent Posts</h2>
+          <h2>最新</h2>
           <ul>
             {recentPosts.map(
               ({ data, slug }, index) =>

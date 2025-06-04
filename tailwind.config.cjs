@@ -32,6 +32,7 @@ module.exports = {
           inverted: withOpacity("--color-text-base"),
           card: withOpacity("--color-card"),
           "card-muted": withOpacity("--color-card-muted"),
+          line: withOpacity("--color-border"),
         },
       },
       outlineColor: {
@@ -55,6 +56,42 @@ module.exports = {
       },
       fontFamily: {
         mono: ["Roboto Mono", "monospace"],
+        sans: [
+          '"LXGW WenKai"',
+          '"霞鹜文楷"',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          '"Noto Sans"',
+          'sans-serif',
+          '"Apple Color Emoji"',
+          '"Segoe UI Emoji"',
+          '"Segoe UI Symbol"',
+          '"Noto Color Emoji"'
+        ],
+        wenkai: [
+          '"LXGW WenKai"',
+          '"霞鹜文楷"',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          '"Segoe UI"',
+          'Roboto',
+          '"Helvetica Neue"',
+          'Arial',
+          'sans-serif'
+        ],
+        chinese: [
+          '"LXGW WenKai"',
+          '"霞鹜文楷"',
+          '"PingFang SC"',
+          '"Hiragino Sans GB"',
+          '"Microsoft YaHei"',
+          '"WenQuanYi Micro Hei"',
+          'sans-serif'
+        ],
       },
 
       typography: {

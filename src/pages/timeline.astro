@@ -1,0 +1,188 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@layouts/Layout.astro";
+import Main from "@layouts/Main.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import { SITE } from "@config";
+import getPostsByTimeline from "@utils/getPostsByTimeline";
+import Datetime from "@components/Datetime";
+
+const posts = await getCollection("blog");
+const timeline = getPostsByTimeline(posts);
+const totalPosts = posts.filter(post => !post.data.draft).length;
+---
+
+<Layout title={`时间线 | ${SITE.title}`}>
+  <Header activeNav="timeline" />
+  <Main pageTitle="时间线" pageDesc={`共 收录${totalPosts} 篇日志`}>
+    <div class="timeline-container">
+      {
+        timeline.map(({ year, months }) => (
+          <div class="year-section">
+            <div class="year-header">
+              <h2 class="year-title">{year}</h2>
+              <div class="year-line" />
+            </div>
+
+            {months.map(({ monthName, posts }) => (
+              <div class="month-section">
+                <h3 class="month-title">{monthName}</h3>
+                <div class="posts-list">
+                  {posts.map(({ data, slug }) => (
+                    <article class="timeline-post">
+                      <div class="post-date">
+                        <Datetime pubDatetime={data.pubDatetime} modDatetime={data.modDatetime} />
+                      </div>
+                      <div class="post-content">
+                        <a href={`/blog/${slug}/`} class="post-title">
+                          {data.title}
+                        </a>
+                        {data.description && <p class="post-description">{data.description}</p>}
+                        {data.tags && data.tags.length > 0 && (
+                          <div class="post-tags">
+                            {data.tags.map(tag => (
+                              <span class="tag">#{tag}</span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))
+      }
+
+      {
+        timeline.length === 0 && (
+          <div class="empty-state">
+            <p>还没有文章，开始写作吧！</p>
+          </div>
+        )
+      }
+    </div>
+  </Main>
+  <Footer />
+</Layout>
+
+<style>
+  .timeline-container {
+    @apply relative;
+  }
+
+  .year-section {
+    @apply mb-12;
+  }
+
+  .year-header {
+    @apply relative mb-8 flex items-center;
+  }
+
+  .year-title {
+    @apply font-wenkai text-3xl font-bold text-skin-accent;
+    @apply relative z-10 bg-skin-fill pr-4;
+  }
+
+  .year-line {
+    @apply bg-skin-line h-px flex-1 opacity-50;
+  }
+
+  .month-section {
+    @apply mb-8 ml-4;
+  }
+
+  .month-title {
+    @apply font-wenkai mb-4 text-xl font-semibold text-skin-base;
+    @apply relative;
+  }
+
+  .month-title::before {
+    content: "";
+    @apply absolute -left-6 top-1/2 h-3 w-3 rounded-full bg-skin-accent;
+    transform: translateY(-50%);
+  }
+
+  .posts-list {
+    @apply ml-2 border-l-2 border-skin-line border-opacity-30 pl-6;
+  }
+
+  .timeline-post {
+    @apply relative mb-6 pb-6;
+  }
+
+  .timeline-post::before {
+    content: "";
+    @apply absolute -left-8 top-2 h-2 w-2 rounded-full bg-skin-card;
+  }
+
+  .timeline-post:not(:last-child)::after {
+    content: "";
+    @apply bg-skin-line absolute -left-7 bottom-0 top-4 w-px opacity-20;
+  }
+
+  .post-date {
+    @apply mb-2 text-sm text-skin-base opacity-75;
+  }
+
+  .post-title {
+    @apply font-wenkai text-lg font-medium text-skin-base hover:text-skin-accent;
+    @apply transition-colors duration-200;
+    @apply mb-2 block;
+  }
+
+  .post-description {
+    @apply mb-3 text-sm leading-relaxed text-skin-base opacity-80;
+  }
+
+  .post-tags {
+    @apply flex flex-wrap gap-2;
+  }
+
+  .tag {
+    @apply rounded bg-skin-card px-2 py-1 text-xs text-skin-accent;
+    @apply border border-skin-line border-opacity-20;
+    @apply transition-colors duration-200 hover:bg-skin-accent hover:text-skin-inverted;
+  }
+
+  .empty-state {
+    @apply py-12 text-center;
+  }
+
+  .empty-state p {
+    @apply font-wenkai text-skin-base opacity-60;
+  }
+
+  /* 响应式优化 */
+  @media (max-width: 640px) {
+    .year-title {
+      @apply text-2xl;
+    }
+
+    .month-title {
+      @apply text-lg;
+    }
+
+    .posts-list {
+      @apply pl-4;
+    }
+
+    .timeline-post::before {
+      @apply -left-6;
+    }
+
+    .timeline-post:not(:last-child)::after {
+      @apply -left-5;
+    }
+
+    .month-title::before {
+      @apply -left-4 h-2 w-2;
+    }
+
+    .month-section {
+      @apply ml-2;
+    }
+  }
+</style>

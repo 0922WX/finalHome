@@ -3,7 +3,7 @@ pubDatetime: 2021-01-03
 title: Debounce and Throttle Comprehensive Guide
 slug: debounce-and-throttling-comprehensive-guide
 featured: false
-draft: false
+draft: true
 tags:
   - tutorial
   - javascript
