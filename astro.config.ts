@@ -7,8 +7,6 @@ import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 import mdx from "@astrojs/mdx";
 
-import netlify from "@astrojs/netlify";
-
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
@@ -50,6 +48,4 @@ export default defineConfig({
 
   scopedStyleStrategy: "where",
   trailingSlash: "always",
-  output: "static",
-  adapter: netlify(),
 });
