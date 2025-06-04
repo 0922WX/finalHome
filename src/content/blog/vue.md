@@ -1,9 +1,11 @@
 ---
+pubDatetime: 2025-04-02
 title: "Vue面试题"
 description: "没啥用"
-image: "/images/wall.jpg"
-pubDate: 2025-04-02
-tags: ["Vue学习"]
+featured: false
+draft: false
+tags:
+  - 前端
 ---
 
 # Vue2和Vue3的区别

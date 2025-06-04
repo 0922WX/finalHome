@@ -1,7 +1,10 @@
 ---
 title: "打暑假工的经历"
 pubDatetime: 2025-03-31
-tags: -日常
+featured: false
+draft: false
+tags:
+  - 日常
 description: "本该如此"
 ---
 

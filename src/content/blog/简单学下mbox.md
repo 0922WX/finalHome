@@ -1,9 +1,9 @@
 ---
 title: "简单学下mbox"
 description: "状态管理"
-image: "/images/js.jpg"
-pubDate: 2025-04-21
-tags: ["前端学习"]
+pubDatetime: 2025-04-21
+tags:
+  - 前端
 ---
 
 ```jsx

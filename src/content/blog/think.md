@@ -1,9 +1,11 @@
 ---
+pubDatetime: 2025-03-29
 title: "反思"
 description: "猫头鹰真的会在黄昏飞?"
-image: "/images/wall.jpg"
-pubDate: 2025-03-29
-tags: ["生活"]
+featured: false
+draft: false
+tags:
+  - 日常
 ---
 
 # 反思
