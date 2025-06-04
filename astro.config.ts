@@ -7,12 +7,16 @@ import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 import mdx from "@astrojs/mdx";
 
+import netlify from "@astrojs/netlify";
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
+
   redirects: {
     "/blog/react-redux-toolkit-with-typescript": "/blog/react-redux-toolkit-with-typescript/",
   },
+
   integrations: [
     tailwind({
       applyBaseStyles: false,
@@ -21,6 +25,7 @@ export default defineConfig({
     sitemap(),
     mdx(),
   ],
+
   markdown: {
     remarkPlugins: [
       remarkToc,
@@ -36,11 +41,15 @@ export default defineConfig({
       wrap: true,
     },
   },
+
   vite: {
     optimizeDeps: {
       exclude: ["@resvg/resvg-js"],
     },
   },
+
   scopedStyleStrategy: "where",
   trailingSlash: "always",
+  output: "static",
+  adapter: netlify(),
 });
