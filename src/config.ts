@@ -1,7 +1,7 @@
 import type { Site, SocialObjects } from "./types";
 
 export const SITE: Site = {
-  website: "https://wxiao.site/",
+  website: "https://finalhome.netlify.app",
   author: "Wang Xiao",
   desc: "A normal blogger - Wang Xiao",
   title: "Wang Xiao",
