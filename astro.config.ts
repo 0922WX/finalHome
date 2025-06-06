@@ -6,13 +6,10 @@ import remarkCollapse from "remark-collapse";
 import sitemap from "@astrojs/sitemap";
 import { SITE } from "./src/config";
 import mdx from "@astrojs/mdx";
-import netlify from "@astrojs/netlify";
 
 // https://astro.build/config
 export default defineConfig({
   site: SITE.website,
-  output: "static",
-  adapter: netlify(),
   redirects: {
     "/blog/react-redux-toolkit-with-typescript": "/blog/react-redux-toolkit-with-typescript/",
   },
