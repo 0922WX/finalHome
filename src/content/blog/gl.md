@@ -1,5 +1,5 @@
 ---
-pubDatetime: 2025-06-07
+pubDatetime: 2025-06-06
 title: webgl入门
 featured: false
 draft: false
