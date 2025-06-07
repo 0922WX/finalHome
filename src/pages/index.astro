@@ -8,10 +8,14 @@ import Socials from "@components/Socials.astro";
 import getSortedPosts from "@utils/getSortedPosts";
 import { SOCIALS } from "@config";
 
-const posts = await getCollection("blog");
+// 优化数据获取 - 只获取必要的字段
+const posts = await getCollection("blog", ({ data }) => {
+  return !data.draft;
+});
 
 const sortedPosts = getSortedPosts(posts);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+// 限制首页显示的文章数量，提高性能
+const recentPosts = sortedPosts.filter(({ data }) => !data.featured).slice(0, 10);
 
 const socialCount = SOCIALS.filter(social => social.active).length;
 ---
@@ -52,10 +56,9 @@ const socialCount = SOCIALS.filter(social => social.active).length;
         <section id="recent-posts">
           <h2>最新</h2>
           <ul>
-            {recentPosts.map(
-              ({ data, slug }, index) =>
-                index < 10 && <Card href={`/blog/${slug}/`} frontmatter={data} secHeading={false} />
-            )}
+            {recentPosts.map(({ data, slug }) => (
+              <Card href={`/blog/${slug}/`} frontmatter={data} secHeading={false} />
+            ))}
           </ul>
         </section>
       )

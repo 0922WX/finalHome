@@ -34,12 +34,28 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage ?? "og.png", Astro.url.or
 <html lang=`${LOCALE.lang ?? "en"}` class={`${scrollSmooth && "scroll-smooth"}`}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- 预连接到外部域名 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" />
+
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="/toggle-theme.js" as="script" />
+    <link rel="preload" href="/performance.js" as="script" />
+
+    <!-- DNS预解析，提高外部资源加载速度 -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+
+    <!-- favicon相关 -->
     <link href="/favicon.ico" rel="shortcut icon" />
     <link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png" />
     <link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png" />
     <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
     <link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
     <link rel="manifest" href="/site.webmanifest" />
 
@@ -70,13 +86,33 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage ?? "og.png", Astro.url.or
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
-    <!-- Google Font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <!-- 优化字体加载 -->
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
+
+    <!-- 异步加载文楷字体 -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.1.0/style.css"
+      />
+    </noscript>
 
     <meta name="theme-color" content="rgb(242, 245, 236)" />
 
@@ -91,7 +127,19 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage ?? "og.png", Astro.url.or
 
     <ClientRouter />
 
-    <script is:inline src="/toggle-theme.js" crossorigin="anonymous"></script>
+    <!-- 内联关键的主题切换脚本以避免FOUC -->
+    <script is:inline>
+      // 立即设置主题，避免闪烁
+      (function () {
+        const theme =
+          localStorage.getItem("theme") ||
+          (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+        document.documentElement.setAttribute("data-theme", theme);
+      })();
+    </script>
+
+    <script src="/toggle-theme.js" defer></script>
+    <script src="/performance.js" defer></script>
   </head>
   <body>
     <slot />
