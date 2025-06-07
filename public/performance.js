@@ -63,7 +63,11 @@
           const domInteractive = perfData.domInteractive - perfData.navigationStart;
 
           // 可以发送到分析服务或在开发时打印
-          if (process.env.NODE_ENV === "development") {
+          if (
+            typeof process !== "undefined" &&
+            process.env &&
+            process.env.NODE_ENV === "development"
+          ) {
             console.log("页面性能指标:", {
               loadTime: `${loadTime}ms`,
               domInteractive: `${domInteractive}ms`,
@@ -109,9 +113,12 @@
 
   init();
 
-  // 导出给Astro transitions使用
-  window.astroPerformance = {
-    setupIntelligentPrefetch,
-    setupLazyLoading,
-  };
+  // 导出给Astro transitions使用 - 添加类型声明
+  if (typeof window !== "undefined") {
+    // @ts-ignore - 为window对象添加自定义属性
+    window.astroPerformance = {
+      setupIntelligentPrefetch,
+      setupLazyLoading,
+    };
+  }
 })();

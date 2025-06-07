@@ -138,8 +138,8 @@ const socialImageURL = new URL(ogImage ?? SITE.ogImage ?? "og.png", Astro.url.or
       })();
     </script>
 
-    <script src="/toggle-theme.js" defer></script>
-    <script src="/performance.js" defer></script>
+    <script is:inline src="/toggle-theme.js"></script>
+    <script is:inline src="/performance.js"></script>
   </head>
   <body>
     <slot />
